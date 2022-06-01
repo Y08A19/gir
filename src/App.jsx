@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import Board from '../components/Board';
+import StatusMessage from '../components/statusmessage';
 import History from '../components/History';
 import { calculateWinner } from './helpers';
+
 import './styles/root.scss';
 
 const app = () => {
@@ -11,10 +13,8 @@ const app = () => {
   const [currentmove, setcurrentmove] = useState(0);
   const current = history[currentmove];
 
-   const winner = calculateWinner(current.board);
-  const message = winner
-    ? `winner is ${winner}`
-    : `next player is ${current.isxNext ? 'x' : 'o'}`;
+  const winner = calculateWinner(current.board);
+
   const handleSquareClick = position => {
     if (current.board[position] || winner) {
       return;
@@ -30,17 +30,21 @@ const app = () => {
       });
       return prev.concat({ board: newboard, isxNext: !last.isxNext });
     });
-    setcurrentmove(prev=>prev+1);
+    setcurrentmove(prev => prev + 1);
   };
-const moveTo=(move)=>{
-  setcurrentmove(move)
-}
+  const moveTo = move => {
+    setcurrentmove(move);
+  };
   return (
     <div className="app">
       <h1>tick tac toe</h1>
-      <h2>{message}</h2>
+      <StatusMessage
+        winner={winner}
+        current={current}
+        currentbor={current.board}
+      />
       <Board board={current.board} handleSquareClick={handleSquareClick} />
-      <History history={history} moveTo={moveTo} currentMove={currentmove}/>
+      <History history={history} moveTo={moveTo} currentMove={currentmove} />
     </div>
   );
 };
