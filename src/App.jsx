@@ -13,7 +13,7 @@ const app = () => {
   const [currentmove, setcurrentmove] = useState(0);
   const current = history[currentmove];
 
-  const winner = calculateWinner(current.board);
+  const {winner,winningSquares} = calculateWinner(current.board);
 
   const handleSquareClick = position => {
     if (current.board[position] || winner) {
@@ -47,7 +47,7 @@ const app = () => {
         current={current}
         currentbor={current.board}
       />
-      <Board board={current.board} handleSquareClick={handleSquareClick} />
+      <Board board={current.board} handleSquareClick={handleSquareClick} winningSquares={winningSquares} />
       <button type="button" onClick={onNEWGAME}>START NEW GAME</button>
       <History history={history} moveTo={moveTo} currentMove={currentmove} />
     </div>
