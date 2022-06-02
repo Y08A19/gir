@@ -5,11 +5,11 @@ import History from '../components/History';
 import { calculateWinner } from './helpers';
 
 import './styles/root.scss';
-
+const NEWGAME=[
+  { board: Array(9).fill(null), isxNext: true },
+];
 const app = () => {
-  const [history, sethistory] = useState([
-    { board: Array(9).fill(null), isxNext: true },
-  ]);
+  const [history, sethistory] = useState(NEWGAME);
   const [currentmove, setcurrentmove] = useState(0);
   const current = history[currentmove];
 
@@ -35,6 +35,10 @@ const app = () => {
   const moveTo = move => {
     setcurrentmove(move);
   };
+  const onNEWGAME=()=>{
+    sethistory(NEWGAME);
+    setcurrentmove(0)
+  }
   return (
     <div className="app">
       <h1>tick tac toe</h1>
@@ -44,6 +48,7 @@ const app = () => {
         currentbor={current.board}
       />
       <Board board={current.board} handleSquareClick={handleSquareClick} />
+      <button type="button" onClick={onNEWGAME}>START NEW GAME</button>
       <History history={history} moveTo={moveTo} currentMove={currentmove} />
     </div>
   );
